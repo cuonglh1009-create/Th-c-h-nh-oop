@@ -229,6 +229,7 @@ def main():
         print("8. Xóa nhân sự khỏi nhóm")
         print("9. Hiển thị nhóm")
         print("10. Tính tổng chi phí nhóm")
+        print("11. Xóa nhóm dự án")
         print("0. Thoát")
         choice = input("\nChọn chức năng: ").strip()
 
@@ -334,7 +335,8 @@ def main():
                 team = choose_team(teams)
                 if team is not None:
                     print(f"Tổng chi phí/tháng: {team.calculateTotalMonthlyCost():,.0f}")
-
+            elif choice == "11":
+                delete_team(teams, employees)
             elif choice == "0":
                 print("\nKẾT THÚC CHƯƠNG TRÌNH.")
                 break
@@ -342,7 +344,21 @@ def main():
                 print("Lựa chọn không hợp lệ.")
         except ValueError as error:
             print(f"Lỗi: {error}")
+def delete_team(teams, employees):
+    if not teams:
+        print("Chưa có nhóm dự án nào để xóa.")
+        return
+    # Chọn nhóm muốn xóa
+    team_to_delete = choose_team(teams)
+    if team_to_delete is None:
+        return
 
+    code = team_to_delete.projectCode
+    name = team_to_delete.projectName
+
+    # Xóa nhóm khỏi danh sách các nhóm
+    teams.remove(team_to_delete)
+    print(f"\n[TC 14] Đã xóa hoàn toàn nhóm dự án: {code} - {name}")
 
 if __name__ == "__main__":
     main()
